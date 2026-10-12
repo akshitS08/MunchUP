@@ -2,9 +2,9 @@ import { Text, View } from "react-native";
 
 export default function Index() {
   return (
-    <View className="flex-1 items-center justify-center bg-whiteS">
-      <Text className="text-xl font-bold text-blue-500">
-        Edit src/app/index.tsx to edit this screen.
+    <View className="flex-1 items-center justify-center bg-white">
+      <Text className="text-5xl text-center text-primary font-quicksand-bold">
+        Welcome to MunchUP
       </Text>
     </View>
   );
