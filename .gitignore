@@ -41,3 +41,7 @@ example
 # generated native folders
 /ios
 /android
+
+# Temporary SDK upgrade backups
+/node_modules_sdk57_backup/
+/package-lock.backup.json

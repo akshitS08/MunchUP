@@ -1,5 +1,6 @@
 import {
   Account,
+  AppwriteException,
   Avatars,
   Client,
   Databases,
@@ -27,61 +28,77 @@ export const account = new Account(client);
 export const databases = new Databases(client);
 const avatar = new Avatars(client);
 
+// Get the currently authenticated account
+export const getActiveAccount = async () => {
+  try {
+    return await account.get();
+  } catch (error) {
+    if (error instanceof AppwriteException && error.code === 401) {
+      return null;
+    }
+
+    throw error;
+  }
+};
+
+// Register a new user
 export const createUser = async ({
   name,
   email,
   password,
 }: CreateUserParams) => {
-  try {
-    const newAccount = await account.create(ID.unique(), email, password, name);
+  const activeAccount = await getActiveAccount();
 
-    if (!newAccount) throw Error;
-
-    await login({ email, password });
-
-    const avatarUrl = avatar.getInitialsURL(name);
-
-    return await databases.createDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.userTableId,
-      ID.unique(),
-      {
-        email,
-        name,
-        accountId: newAccount.$id,
-        avatar: avatarUrl,
-      },
-    );
-  } catch (e) {
-    throw new Error(e as string);
+  if (activeAccount) {
+    throw new Error("Please log out before signing up.");
   }
+
+  const newAccount = await account.create(ID.unique(), email, password, name);
+
+  await account.createEmailPasswordSession(email, password);
+
+  const avatarUrl = avatar.getInitialsURL(name);
+
+  return databases.createDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.userTableId,
+    ID.unique(),
+    {
+      email,
+      name,
+      accountId: newAccount.$id,
+      avatar: avatarUrl,
+    },
+  );
 };
 
+// Log in an existing user
 export const login = async ({ email, password }: LogInParams) => {
-  try {
-    const session = await account.createEmailPasswordSession(email, password);
-  } catch (e) {
-    throw new Error(e as string);
+  const activeAccount = await getActiveAccount();
+
+  if (activeAccount) {
+    throw new Error("Please log out before logging in again.");
   }
+
+  return account.createEmailPasswordSession(email, password);
 };
 
+// Log out the current user
+export const logout = async () => {
+  await account.deleteSession("current");
+};
+
+// Get the current user's database profile
 export const getCurrentUser = async () => {
-  try {
-    const currentAccount = await account.get();
+  const currentAccount = await getActiveAccount();
 
-    if (!currentAccount) throw Error;
+  if (!currentAccount) return null;
 
-    const currentUser = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.userTableId,
-      [Query.equal("accountId", currentAccount.$id)],
-    );
+  const currentUser = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.userTableId,
+    [Query.equal("accountId", currentAccount.$id)],
+  );
 
-    if (!currentUser) throw Error;
-
-    return currentUser.documents[0];
-  } catch (e) {
-    console.log(e);
-    throw new Error(e as string);
-  }
+  return currentUser.documents[0] ?? null;
 };

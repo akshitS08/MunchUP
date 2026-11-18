@@ -7,6 +7,10 @@ import "./globals.css";
 
 SplashScreen.preventAutoHideAsync();
 
+export const unstable_settings = {
+  anchor: "(tabs)",
+};
+
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
     "Quicksand-Bold": require("../../assets/fonts/Quicksand-Bold.ttf"),
@@ -23,7 +27,8 @@ export default function RootLayout() {
 
   return (
     <>
-      <Stack screenOptions={{ headerShown: false }} initialRouteName="(tabs)" />
+      <Stack screenOptions={{ headerShown: false }} />
+
       <Toast
         position="bottom"
         bottomOffset={55}

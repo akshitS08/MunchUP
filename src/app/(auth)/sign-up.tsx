@@ -8,32 +8,38 @@ import { createUser } from "../../../lib/appwrite";
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const Submit = async () => {
+    if (isSubmitting) return;
+
     const { name, email, password } = form;
 
-    if (!name || !email.trim() || !password) {
+    if (!name.trim() || !email.trim() || !password) {
       Alert.alert("Error", "Please enter valid name, email & password");
+      return;
     }
 
     setIsSubmitting(true);
 
     try {
-      //call appwrite signup function
       await createUser({
-        email,
+        email: email.trim(),
         password,
-        name,
+        name: name.trim(),
       });
 
       Toast.show({
         type: "success",
-        text1: "Welcome back!",
+        text1: "Account created successfully!",
       });
 
       router.replace("/");
-    } catch (error: any) {
+    } catch (error) {
       Alert.alert(
         "Sign Up Failed",
         error instanceof Error
@@ -54,6 +60,7 @@ const SignUp = () => {
         label="Full Name"
         keyboardType="default"
       />
+
       <CustomInput
         placeholder="Enter your email"
         value={form.email}
@@ -71,12 +78,14 @@ const SignUp = () => {
         label="Password"
         secureTextEntry={true}
       />
+
       <CustomButton title="Sign Up" isLoading={isSubmitting} onPress={Submit} />
 
       <View className="flex justify-center mt-3 flex-row gap-2">
         <Text className="base-regular text-gray-200">
           Already have an account?
         </Text>
+
         <Link href="/(auth)/log-in">
           <Text className="text-primary base-bold">Log In</Text>
         </Link>

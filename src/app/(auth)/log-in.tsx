@@ -11,17 +11,22 @@ const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
 
   const Submit = async () => {
+    if (isSubmitting) return;
+
     const { email, password } = form;
 
     if (!email.trim() || !password) {
       Alert.alert("Error", "Please enter valid email & password");
+      return;
     }
 
     setIsSubmitting(true);
 
     try {
-      //call appwrite login function
-      await login({ email, password });
+      await login({
+        email: email.trim(),
+        password,
+      });
 
       Toast.show({
         type: "success",
@@ -29,7 +34,7 @@ const Login = () => {
       });
 
       router.replace("/");
-    } catch (error: any) {
+    } catch (error) {
       Alert.alert(
         "Log In Failed",
         error instanceof Error
