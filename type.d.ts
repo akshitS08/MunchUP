@@ -90,13 +90,13 @@ interface ProfileFieldProps {
   icon: ImageSourcePropType;
 }
 
-interface CreateUserPrams {
+interface CreateUserParams {
   email: string;
   password: string;
   name: string;
 }
 
-interface SignInParams {
+interface LogInParams {
   email: string;
   password: string;
 }

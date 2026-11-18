@@ -4,13 +4,16 @@ import { Alert, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
+import { login } from "../../../lib/appwrite";
 
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
 
   const Submit = async () => {
-    if (!form.email.trim() || !form.password) {
+    const { email, password } = form;
+
+    if (!email.trim() || !password) {
       Alert.alert("Error", "Please enter valid email & password");
     }
 
@@ -18,6 +21,8 @@ const Login = () => {
 
     try {
       //call appwrite login function
+      await login({ email, password });
+
       Toast.show({
         type: "success",
         text1: "Welcome back!",
@@ -25,14 +30,12 @@ const Login = () => {
 
       router.replace("/");
     } catch (error: any) {
-      Toast.show({
-        type: "error",
-        text1: "Login failed",
-        text2:
-          error instanceof Error
-            ? error.message
-            : "Something went wrong. Please try again.",
-      });
+      Alert.alert(
+        "Log In Failed",
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
