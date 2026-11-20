@@ -18,11 +18,11 @@
 
 @layer components {
   .cart-btn {
-    @apply flex items-center justify-center size-10 rounded-full bg-dark-100;
+    @apply flex items-center justify-center size-10 rounded-full bg-marine;
   }
 
   .cart-badge {
-    @apply absolute -top-2 -right-1 flex items-center justify-center size-5 bg-primary rounded-full;
+    @apply absolute -top-2 -right-1 flex items-center justify-center size-5 bg-clementine rounded-full;
   }
 
   .cart-item {
@@ -38,7 +38,7 @@
   }
 
   .custom-btn {
-    @apply bg-primary rounded-full p-3 w-full flex flex-row justify-center;
+    @apply bg-clementine rounded-full p-3 w-full flex flex-row justify-center;
   }
 
   .custom-header {
@@ -46,11 +46,11 @@
   }
 
   .label {
-    @apply text-base text-start w-full font-quicksand-medium text-gray-200 pl-2;
+    @apply text-base text-start w-full font-quicksand-bold text-marine pl-2;
   }
 
   .input {
-    @apply rounded-lg p-3 w-full text-base font-quicksand-semibold text-primary border-b leading-5;
+    @apply rounded-lg p-3 w-full text-base font-quicksand-semibold text-marine leading-5;
   }
 
   .filter {

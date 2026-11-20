@@ -52,7 +52,7 @@ const SignUp = () => {
   };
 
   return (
-    <View className="gap-7 bg-white rounded-lg p-5 mt-5">
+    <View className="gap-7 bg-meringue rounded-lg p-5 mt-5">
       <CustomInput
         placeholder="Enter your full name"
         value={form.name}
@@ -82,12 +82,12 @@ const SignUp = () => {
       <CustomButton title="Sign Up" isLoading={isSubmitting} onPress={Submit} />
 
       <View className="flex justify-center mt-3 flex-row gap-2">
-        <Text className="base-regular text-gray-200">
+        <Text className="base-regular text-marine">
           Already have an account?
         </Text>
 
         <Link href="/(auth)/log-in">
-          <Text className="text-primary base-bold">Log In</Text>
+          <Text className="text-clementine base-bold">Log In</Text>
         </Link>
       </View>
     </View>

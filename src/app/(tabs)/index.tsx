@@ -14,11 +14,12 @@ import { images, offers } from "../../../constants";
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-meringue">
       <FlatList
         data={offers}
         renderItem={({ item, index }) => {
           const isEven = index % 2 === 0;
+          const isMarine = item.color === "#1E3D6B";
 
           return (
             <View>
@@ -47,7 +48,7 @@ export default function HomeScreen() {
                       )}
                     >
                       <Text
-                        className="h1-bold text-white leading-tight"
+                        className={cn("h1-bold leading-tight text-white")}
                         numberOfLines={2}
                         adjustsFontSizeToFit
                         minimumFontScale={0.8}
@@ -58,7 +59,7 @@ export default function HomeScreen() {
                         source={images.arrowRight}
                         className="size-10"
                         resizeMode="contain"
-                        tintColor="#ffffff"
+                        tintColor="#FFFFFF"
                       />
                     </View>
                   </Fragment>
@@ -73,9 +74,9 @@ export default function HomeScreen() {
         ListHeaderComponent={() => (
           <View className="flex-between flex-row my-5">
             <View className="flex-start">
-              <Text className="small-bold text-primary">DELIVER TO</Text>
+              <Text className="small-bold text-clementine">DELIVER TO</Text>
               <TouchableOpacity className="flex-center flex-row gap-x-1 mt-0.5">
-                <Text className="paragraph-bold text-dark-100">Croatia</Text>
+                <Text className="paragraph-bold text-marine">Croatia</Text>
                 <Image
                   source={images.arrowDown}
                   className="size-3"

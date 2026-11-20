@@ -5,6 +5,12 @@ module.exports = {
     extend: {
       colors: {
         primary: "#FE8C00",
+        meringue: "#FFFDF9",
+        marine: "#13294B",
+        marineLight: "#1E3D6B",
+        clementine: "#FF6A1F",
+        clementineLight: "#FF8C55",
+        clementine80: "rgba(255, 106, 31, 0.8)",
         white: {
           DEFAULT: "#FFFFFF",
           100: "#FAFAFA",

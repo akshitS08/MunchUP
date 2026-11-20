@@ -12,7 +12,6 @@ const Login = () => {
 
   const Submit = async () => {
     if (isSubmitting) return;
-
     const { email, password } = form;
 
     if (!email.trim() || !password) {
@@ -47,7 +46,7 @@ const Login = () => {
   };
 
   return (
-    <View className="gap-10 bg-white rounded-lg p-5 mt-5">
+    <View className="gap-10 bg-meringue rounded-lg p-5 mt-5">
       <CustomInput
         placeholder="Enter your email"
         value={form.email}
@@ -68,11 +67,9 @@ const Login = () => {
       <CustomButton title="Log In" isLoading={isSubmitting} onPress={Submit} />
 
       <View className="flex justify-center mt-3 flex-row gap-2">
-        <Text className="base-regular text-gray-200">
-          Don't have an account?
-        </Text>
+        <Text className="base-regular text-marine">Don't have an account?</Text>
         <Link href="/(auth)/sign-up">
-          <Text className="text-primary base-bold">Sign Up</Text>
+          <Text className="text-clementine base-bold">Sign Up</Text>
         </Link>
       </View>
     </View>
