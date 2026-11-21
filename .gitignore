@@ -45,3 +45,4 @@ example
 # Temporary SDK upgrade backups
 /node_modules_sdk57_backup/
 /package-lock.backup.json
+.env.local

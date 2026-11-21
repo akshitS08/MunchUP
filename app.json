@@ -31,6 +31,14 @@
           "image": "./assets/images/logo.png",
           "imageWidth": 180
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "munchup",
+          "organization": "munchup-dev"
+        }
       ]
     ],
     "experiments": {

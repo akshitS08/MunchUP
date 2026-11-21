@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react-native";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
@@ -33,13 +34,9 @@ const Login = () => {
       });
 
       router.replace("/");
-    } catch (error) {
-      Alert.alert(
-        "Log In Failed",
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again.",
-      );
+    } catch (error: any) {
+      Alert.alert("Error", error.message);
+      Sentry.captureException(error);
     } finally {
       setIsSubmitting(false);
     }
