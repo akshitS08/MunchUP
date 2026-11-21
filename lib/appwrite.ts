@@ -55,7 +55,7 @@ export const createUser = async ({
 
   const newAccount = await account.create(ID.unique(), email, password, name);
 
-  await account.createEmailPasswordSession(email, password);
+  await account.createEmailPasswordSession(email, password); // !Login session after creating the account
 
   const avatarUrl = avatar.getInitialsURL(name);
 
@@ -90,15 +90,23 @@ export const logout = async () => {
 
 // Get the current user's database profile
 export const getCurrentUser = async () => {
-  const currentAccount = await getActiveAccount();
+  try {
+    const currentAccount = await getActiveAccount();
 
-  if (!currentAccount) return null;
+    if (!currentAccount) return null;
 
-  const currentUser = await databases.listDocuments(
-    appwriteConfig.databaseId,
-    appwriteConfig.userTableId,
-    [Query.equal("accountId", currentAccount.$id)],
-  );
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userTableId,
+      [Query.equal("accountId", currentAccount.$id)],
+    );
 
-  return currentUser.documents[0] ?? null;
+    if (!currentUser.documents.length) return null;
+
+    return currentUser.documents[0] ?? null;
+  } catch (error) {
+    console.log(error);
+
+    throw error;
+  }
 };
